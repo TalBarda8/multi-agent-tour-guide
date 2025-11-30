@@ -1,0 +1,14 @@
+# Multi-Agent AI Tour Guide System
+# Python Dependencies
+
+# Core dependencies
+python-dotenv==1.0.0
+
+# Testing (for Phase 5)
+pytest==7.4.3
+pytest-cov==4.1.0
+
+# Will be added in Phase 4 when integrating real APIs:
+# requests==2.31.0
+# google-maps-services==4.10.0
+# spotipy==2.23.0
