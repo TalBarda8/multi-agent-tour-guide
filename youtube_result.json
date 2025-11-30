@@ -1,0 +1,20 @@
+{
+  "agent_name": "youtube",
+  "transaction_id": "TXID-20251130T183224-c2f9b40e-454c-45ac-b012-f85acd1572e9",
+  "waypoint_id": 1,
+  "status": "success",
+  "content": {
+    "content_type": "video",
+    "title": "5th Avenue New York - Complete Walking Tour in 4K",
+    "description": "Complete virtual walking tour of Manhattan's famous Fifth Avenue, from Empire State Building area through Midtown. See luxury stores, historic buildings, and street life in ultra HD.",
+    "url": "https://youtube.com/watch?v=dQw4w9WgXcQ",
+    "relevance_score": 0.77,
+    "metadata": {
+      "channel": "Virtual Trips",
+      "view_count": 1200000,
+      "duration": "15:20"
+    }
+  },
+  "error_message": null,
+  "execution_time_ms": 0
+}

@@ -1,0 +1,108 @@
+{
+  "waypoints": [
+    {
+      "id": 1,
+      "location_name": "5th Avenue & E 34th St",
+      "coordinates": {
+        "lat": 40.748817,
+        "lng": -73.985428
+      },
+      "queries": {
+        "youtube": "5th Avenue E 34th St travel guide",
+        "spotify": "5th Avenue city urban",
+        "history": "5th Avenue E 34th St history"
+      }
+    },
+    {
+      "id": 2,
+      "location_name": "5th Avenue & E 42nd St",
+      "coordinates": {
+        "lat": 40.753182,
+        "lng": -73.981736
+      },
+      "queries": {
+        "youtube": "5th Avenue E 42nd St travel guide",
+        "spotify": "5th Avenue city urban",
+        "history": "5th Avenue E 42nd St history"
+      }
+    },
+    {
+      "id": 3,
+      "location_name": "5th Avenue & E 50th St",
+      "coordinates": {
+        "lat": 40.758402,
+        "lng": -73.977459
+      },
+      "queries": {
+        "youtube": "5th Avenue E 50th St travel guide",
+        "spotify": "5th Avenue city urban",
+        "history": "5th Avenue E 50th St history"
+      }
+    },
+    {
+      "id": 4,
+      "location_name": "5th Avenue & E 59th St",
+      "coordinates": {
+        "lat": 40.764526,
+        "lng": -73.973448
+      },
+      "queries": {
+        "youtube": "5th Avenue E 59th St travel guide",
+        "spotify": "5th Avenue city urban",
+        "history": "5th Avenue E 59th St history"
+      }
+    },
+    {
+      "id": 5,
+      "location_name": "Central Park South & 6th Ave",
+      "coordinates": {
+        "lat": 40.765187,
+        "lng": -73.976345
+      },
+      "queries": {
+        "youtube": "Central Park South 6th Ave tour video",
+        "spotify": "Central Park South instrumental ambient",
+        "history": "Central Park South 6th Ave history"
+      }
+    },
+    {
+      "id": 6,
+      "location_name": "Central Park - The Pond",
+      "coordinates": {
+        "lat": 40.767456,
+        "lng": -73.974821
+      },
+      "queries": {
+        "youtube": "Central Park The Pond tour video",
+        "spotify": "Central Park instrumental ambient",
+        "history": "Central Park The Pond history"
+      }
+    },
+    {
+      "id": 7,
+      "location_name": "Central Park - Bethesda Terrace",
+      "coordinates": {
+        "lat": 40.772932,
+        "lng": -73.971589
+      },
+      "queries": {
+        "youtube": "Central Park Bethesda Terrace tour video",
+        "spotify": "Central Park instrumental ambient",
+        "history": "Central Park Bethesda Terrace history"
+      }
+    },
+    {
+      "id": 8,
+      "location_name": "Central Park - Belvedere Castle",
+      "coordinates": {
+        "lat": 40.779267,
+        "lng": -73.969083
+      },
+      "queries": {
+        "youtube": "Central Park Belvedere Castle destination Central Park tour video",
+        "spotify": "Central Park instrumental ambient",
+        "history": "Central Park Belvedere Castle history"
+      }
+    }
+  ]
+}
