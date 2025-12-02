@@ -180,7 +180,6 @@ def _retrieve_route_mock(context: TransactionContext) -> RouteData:
 def _retrieve_route_real(context: TransactionContext) -> RouteData:
     """
     Real Google Maps API integration
-    To be implemented in Phase 4
 
     Args:
         context: Transaction context
@@ -189,6 +188,45 @@ def _retrieve_route_real(context: TransactionContext) -> RouteData:
         RouteData from Google Maps API
 
     Raises:
-        NotImplementedError: Not yet implemented
+        RouteRetrievalError: If route cannot be retrieved
     """
-    raise NotImplementedError("Real Google Maps integration coming in Phase 4")
+    from src.google_maps import GoogleMapsClient, GoogleMapsError
+
+    logger = get_logger()
+
+    try:
+        # Create Google Maps client
+        client = GoogleMapsClient()
+
+        # Get directions
+        route_data = client.get_directions(
+            origin=context.origin,
+            destination=context.destination,
+            mode="driving"
+        )
+
+        logger.info(
+            "Successfully retrieved route from Google Maps",
+            transaction_id=context.transaction_id,
+            waypoint_count=len(route_data.waypoints),
+            distance=route_data.distance
+        )
+
+        return route_data
+
+    except GoogleMapsError as e:
+        logger.error(
+            "Google Maps API error",
+            transaction_id=context.transaction_id,
+            error=str(e)
+        )
+        raise RouteRetrievalError(f"Failed to get route from Google Maps: {str(e)}")
+
+    except Exception as e:
+        logger.error(
+            "Unexpected error retrieving route",
+            transaction_id=context.transaction_id,
+            error=str(e),
+            exc_info=True
+        )
+        raise RouteRetrievalError(f"Unexpected error: {str(e)}")
