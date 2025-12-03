@@ -76,7 +76,7 @@ def preprocess_waypoints(context: TransactionContext, route: RouteData) -> List[
         # Build agent-specific queries
         waypoint.agent_context = AgentContext(
             youtube_query=_build_youtube_query(waypoint),
-            spotify_query=_build_spotify_query(waypoint),
+            music_query=_build_music_query(waypoint),
             history_query=_build_history_query(waypoint)
         )
 
@@ -280,15 +280,15 @@ def _build_youtube_query(waypoint: Waypoint) -> str:
     return query
 
 
-def _build_spotify_query(waypoint: Waypoint) -> str:
+def _build_music_query(waypoint: Waypoint) -> str:
     """
-    Build Spotify search query for waypoint
+    Build music search query for waypoint (YouTube Music search)
 
     Args:
         waypoint: Waypoint with metadata
 
     Returns:
-        Spotify search query string
+        Music search query string for YouTube
     """
     # Use neighborhood or main location for music search
     if waypoint.metadata.neighborhood:
@@ -296,11 +296,11 @@ def _build_spotify_query(waypoint: Waypoint) -> str:
     else:
         query = waypoint.metadata.search_keywords[0] if waypoint.metadata.search_keywords else waypoint.location_name
 
-    # Add genre hints based on location type
+    # Add music-specific keywords for YouTube search
     if waypoint.metadata.location_type == LocationType.LANDMARK:
-        query += " instrumental ambient"
+        query += " song instrumental ambient music"
     else:
-        query += " city urban"
+        query += " song city urban music"
 
     return query
 

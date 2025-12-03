@@ -102,7 +102,7 @@ class AgentResult:
     Standard result structure for all agents
     Every agent must return this structure
     """
-    agent_name: str  # "youtube" | "spotify" | "history" | "judge"
+    agent_name: str  # "youtube" | "music" | "history" | "judge"
     transaction_id: str
     waypoint_id: int
     status: AgentStatus
@@ -184,13 +184,13 @@ class AgentContext:
     Contains pre-built search queries for each agent type
     """
     youtube_query: str
-    spotify_query: str
+    music_query: str
     history_query: str
 
     def to_dict(self) -> Dict[str, Any]:
         return {
             "youtube_query": self.youtube_query,
-            "spotify_query": self.spotify_query,
+            "music_query": self.music_query,
             "history_query": self.history_query
         }
 

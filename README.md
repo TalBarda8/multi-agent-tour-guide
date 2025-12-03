@@ -22,7 +22,7 @@ An intelligent, asynchronous platform that transforms ordinary driving direction
 ### ✅ Phase 2: Complete (Agent Creation)
 - ✅ All 4 agents created by user
 - ✅ `youtube-location-video-finder`
-- ✅ `spotify-location-music-finder`
+- ✅ `music-location-finder`
 - ✅ `history-location-researcher`
 - ✅ `content-evaluator-judge`
 
@@ -84,7 +84,7 @@ User Request
 │                                                              │
 │  For each waypoint, spawns parallel agents:                 │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐                 │
-│  │ YouTube  │  │ Spotify  │  │ History  │                 │
+│  │ YouTube  │  │  Music   │  │ History  │                 │
 │  │  Agent   │  │  Agent   │  │  Agent   │                 │
 │  └────┬─────┘  └────┬─────┘  └────┬─────┘                 │
 │       └─────────────┴─────────────┘                        │
@@ -239,8 +239,8 @@ multi-agent-tour-guide/
 ```json
 {"timestamp": "2025-11-30 20:15:55,712", "level": "INFO", "transaction_id": "TXID-20251130T181555-a47e1f98", "message": "Request validated", "origin": "Empire State Building, New York, NY"}
 {"timestamp": "2025-11-30 20:15:55,712", "level": "INFO", "transaction_id": "TXID-20251130T181555-a47e1f98", "message": "Route retrieved successfully", "waypoint_count": 8}
-{"timestamp": "2025-11-30 20:15:56,118", "level": "INFO", "transaction_id": "TXID-20251130T181555-a47e1f98", "message": "spotify agent completed", "waypoint_id": 1, "status": "success", "execution_time_ms": 405}
-{"timestamp": "2025-11-30 20:15:57,250", "level": "INFO", "transaction_id": "TXID-20251130T181555-a47e1f98", "message": "Judge decision made", "waypoint_id": 1, "winner": "spotify", "confidence": 0.82}
+{"timestamp": "2025-11-30 20:15:56,118", "level": "INFO", "transaction_id": "TXID-20251130T181555-a47e1f98", "message": "music agent completed", "waypoint_id": 1, "status": "success", "execution_time_ms": 405}
+{"timestamp": "2025-11-30 20:15:57,250", "level": "INFO", "transaction_id": "TXID-20251130T181555-a47e1f98", "message": "Judge decision made", "waypoint_id": 1, "winner": "music", "confidence": 0.82}
 ```
 
 ### Response (response.json)
@@ -263,13 +263,13 @@ multi-agent-tour-guide/
         "content": {
           "type": "song",
           "title": "Song for 5th Avenue & E 34th St",
-          "url": "https://open.spotify.com/track/mock_1",
+          "url": "https://youtube.com/watch?v=mock_music_1",
           "relevance_score": "0.82"
         },
         "decision": {
-          "winner": "spotify",
+          "winner": "music",
           "confidence": "0.82",
-          "reasoning": "Selected spotify with highest relevance score (0.82)"
+          "reasoning": "Selected music with highest relevance score (0.82)"
         }
       }
     ]
@@ -286,8 +286,8 @@ multi-agent-tour-guide/
 **👉 See [AGENT_CREATION_GUIDE.md](./AGENT_CREATION_GUIDE.md) for detailed specifications**
 
 Create these 4 agents in your agent interface:
-1. **YouTubeContentAgent** - Find relevant videos
-2. **SpotifyContentAgent** - Find relevant music
+1. **YouTubeContentAgent** - Find relevant videos (walking tours, location videos)
+2. **MusicContentAgent** - Find relevant music (songs, music videos on YouTube)
 3. **HistoryContentAgent** - Retrieve historical facts
 4. **JudgeContentAgent** - Select best content
 
@@ -366,7 +366,7 @@ enrichment: WaypointEnrichment    # Added by orchestrator
 
 ### AgentResult
 ```python
-agent_name: str                   # "youtube|spotify|history|judge"
+agent_name: str                   # "youtube|music|history|judge"
 transaction_id: str
 waypoint_id: int
 status: AgentStatus               # SUCCESS|TIMEOUT|ERROR
