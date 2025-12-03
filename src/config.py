@@ -7,6 +7,10 @@ from dataclasses import dataclass
 from typing import Optional
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 
 @dataclass
@@ -98,8 +102,7 @@ class SystemConfig:
                 errors.append("GOOGLE_MAPS_API_KEY is required in non-mock mode")
             if not self.youtube_api_key:
                 errors.append("YOUTUBE_API_KEY is required in non-mock mode")
-            if not self.spotify_client_id or not self.spotify_client_secret:
-                errors.append("SPOTIFY credentials are required in non-mock mode")
+            # Note: Spotify credentials not required - music-location-finder agent uses YouTube API
 
         # Check timeout values
         if self.agent_timeout_ms <= 0:
