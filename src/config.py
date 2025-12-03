@@ -18,7 +18,9 @@ class SystemConfig:
 
     # API Keys
     google_maps_api_key: str = ""
-    youtube_api_key: str = ""  # Used by YouTube agents (video + music)
+    youtube_api_key: str = ""
+    spotify_client_id: str = ""
+    spotify_client_secret: str = ""
 
     # Timeouts (milliseconds)
     agent_timeout_ms: int = 5000
@@ -52,6 +54,8 @@ class SystemConfig:
             # API Keys
             google_maps_api_key=os.getenv("GOOGLE_MAPS_API_KEY", ""),
             youtube_api_key=os.getenv("YOUTUBE_API_KEY", ""),
+            spotify_client_id=os.getenv("SPOTIFY_CLIENT_ID", ""),
+            spotify_client_secret=os.getenv("SPOTIFY_CLIENT_SECRET", ""),
 
             # Timeouts
             agent_timeout_ms=int(os.getenv("AGENT_TIMEOUT_MS", "5000")),
@@ -93,7 +97,9 @@ class SystemConfig:
             if not self.google_maps_api_key:
                 errors.append("GOOGLE_MAPS_API_KEY is required in non-mock mode")
             if not self.youtube_api_key:
-                errors.append("YOUTUBE_API_KEY is required in non-mock mode (used for both video and music agents)")
+                errors.append("YOUTUBE_API_KEY is required in non-mock mode")
+            if not self.spotify_client_id or not self.spotify_client_secret:
+                errors.append("SPOTIFY credentials are required in non-mock mode")
 
         # Check timeout values
         if self.agent_timeout_ms <= 0:

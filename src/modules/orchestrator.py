@@ -161,7 +161,7 @@ class Orchestrator:
         Run all agents for a single waypoint and select best content
 
         This is where the parallel agent execution happens:
-        1. Launch YouTube (video), Music (YouTube songs), History agents in parallel
+        1. Launch YouTube, Spotify, History agents in parallel
         2. Wait for results (with timeout)
         3. Run Judge agent to select best content
         4. Assemble enrichment
@@ -189,8 +189,8 @@ class Orchestrator:
                 context.transaction_id,
                 waypoint
             ),
-            'music': self.thread_pool.submit(
-                self._run_music_agent,
+            'spotify': self.thread_pool.submit(
+                self._run_spotify_agent,
                 context.transaction_id,
                 waypoint
             ),
@@ -324,13 +324,13 @@ class Orchestrator:
 
         return result
 
-    def _run_music_agent(
+    def _run_spotify_agent(
         self,
         transaction_id: str,
         waypoint: Waypoint
     ) -> AgentResult:
         """
-        Execute Music agent (searches YouTube for songs/music videos)
+        Execute Spotify agent
         MOCK IMPLEMENTATION - will be replaced with real agent call
 
         Args:
@@ -338,15 +338,15 @@ class Orchestrator:
             waypoint: Waypoint to process
 
         Returns:
-            AgentResult from Music agent
+            AgentResult from Spotify agent
         """
         start_time = time.time()
 
         self.logger.log_agent_start(
-            "music",
+            "spotify",
             transaction_id,
             waypoint.id,
-            search_query=waypoint.agent_context.music_query if waypoint.agent_context else ""
+            search_query=waypoint.agent_context.spotify_query if waypoint.agent_context else ""
         )
 
         # MOCK: Simulate API call delay
@@ -356,16 +356,16 @@ class Orchestrator:
         content = ContentItem(
             content_type=ContentType.SONG,
             title=f"Song for {waypoint.location_name}",
-            description="A fitting soundtrack for this location (from YouTube Music)",
+            description="A fitting soundtrack for this location",
             relevance_score=0.82,
-            url=f"https://youtube.com/watch?v=mock_music_{waypoint.id}",
-            metadata={"source": "mock", "platform": "YouTube Music"}
+            url=f"https://open.spotify.com/track/mock_{waypoint.id}",
+            metadata={"source": "mock", "artist": "Mock Artist"}
         )
 
         execution_time_ms = int((time.time() - start_time) * 1000)
 
         result = AgentResult(
-            agent_name="music",
+            agent_name="spotify",
             transaction_id=transaction_id,
             waypoint_id=waypoint.id,
             status=AgentStatus.SUCCESS,
@@ -374,7 +374,7 @@ class Orchestrator:
         )
 
         self.logger.log_agent_completion(
-            "music",
+            "spotify",
             transaction_id,
             waypoint.id,
             result.status.value,
