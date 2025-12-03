@@ -5,8 +5,8 @@ This is the central nervous system of the multi-agent platform
 """
 
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed, Future
-from typing import List, Dict, Callable, Optional
+from concurrent.futures import ThreadPoolExecutor, Future
+from typing import List, Dict
 import threading
 
 from src.models import (
@@ -14,13 +14,15 @@ from src.models import (
     Waypoint,
     AgentResult,
     WaypointEnrichment,
-    JudgeDecision,
-    ContentItem,
-    ContentType,
-    AgentStatus,
     create_fallback_content,
     create_timeout_result,
     create_error_result
+)
+from src.modules.mock_agents import (
+    run_mock_youtube_agent,
+    run_mock_spotify_agent,
+    run_mock_history_agent,
+    run_mock_judge
 )
 from src.logging_config import get_logger
 from src.config import get_config
@@ -185,17 +187,17 @@ class Orchestrator:
         # Launch 3 agents in parallel
         agent_futures = {
             'youtube': self.thread_pool.submit(
-                self._run_youtube_agent,
+                run_mock_youtube_agent,
                 context.transaction_id,
                 waypoint
             ),
             'spotify': self.thread_pool.submit(
-                self._run_spotify_agent,
+                run_mock_spotify_agent,
                 context.transaction_id,
                 waypoint
             ),
             'history': self.thread_pool.submit(
-                self._run_history_agent,
+                run_mock_history_agent,
                 context.transaction_id,
                 waypoint
             )
@@ -238,7 +240,7 @@ class Orchestrator:
                 )
 
         # Run Judge to select best content
-        judge_decision = self._run_judge(context, waypoint, agent_results)
+        judge_decision = run_mock_judge(context, waypoint, agent_results)
 
         # Calculate processing time
         processing_time_ms = int((time.time() - start_time) * 1000)
@@ -263,281 +265,6 @@ class Orchestrator:
         )
 
         return waypoint
-
-    def _run_youtube_agent(
-        self,
-        transaction_id: str,
-        waypoint: Waypoint
-    ) -> AgentResult:
-        """
-        Execute YouTube agent
-        MOCK IMPLEMENTATION - will be replaced with real agent call
-
-        Args:
-            transaction_id: Transaction ID
-            waypoint: Waypoint to process
-
-        Returns:
-            AgentResult from YouTube agent
-        """
-        start_time = time.time()
-
-        self.logger.log_agent_start(
-            "youtube",
-            transaction_id,
-            waypoint.id,
-            search_query=waypoint.agent_context.youtube_query if waypoint.agent_context else ""
-        )
-
-        # MOCK: Simulate API call delay
-        time.sleep(0.5)
-
-        # MOCK: Create fake result
-        content = ContentItem(
-            content_type=ContentType.VIDEO,
-            title=f"Video about {waypoint.location_name}",
-            description=f"A virtual tour of {waypoint.location_name}",
-            relevance_score=0.75,
-            url=f"https://youtube.com/watch?v=mock_{waypoint.id}",
-            metadata={"source": "mock"}
-        )
-
-        execution_time_ms = int((time.time() - start_time) * 1000)
-
-        result = AgentResult(
-            agent_name="youtube",
-            transaction_id=transaction_id,
-            waypoint_id=waypoint.id,
-            status=AgentStatus.SUCCESS,
-            content=content,
-            execution_time_ms=execution_time_ms
-        )
-
-        self.logger.log_agent_completion(
-            "youtube",
-            transaction_id,
-            waypoint.id,
-            result.status.value,
-            execution_time_ms,
-            relevance_score=content.relevance_score
-        )
-
-        return result
-
-    def _run_spotify_agent(
-        self,
-        transaction_id: str,
-        waypoint: Waypoint
-    ) -> AgentResult:
-        """
-        Execute Spotify agent
-        MOCK IMPLEMENTATION - will be replaced with real agent call
-
-        Args:
-            transaction_id: Transaction ID
-            waypoint: Waypoint to process
-
-        Returns:
-            AgentResult from Spotify agent
-        """
-        start_time = time.time()
-
-        self.logger.log_agent_start(
-            "spotify",
-            transaction_id,
-            waypoint.id,
-            search_query=waypoint.agent_context.spotify_query if waypoint.agent_context else ""
-        )
-
-        # MOCK: Simulate API call delay
-        time.sleep(0.4)
-
-        # MOCK: Create fake result
-        content = ContentItem(
-            content_type=ContentType.SONG,
-            title=f"Song for {waypoint.location_name}",
-            description="A fitting soundtrack for this location",
-            relevance_score=0.82,
-            url=f"https://open.spotify.com/track/mock_{waypoint.id}",
-            metadata={"source": "mock", "artist": "Mock Artist"}
-        )
-
-        execution_time_ms = int((time.time() - start_time) * 1000)
-
-        result = AgentResult(
-            agent_name="spotify",
-            transaction_id=transaction_id,
-            waypoint_id=waypoint.id,
-            status=AgentStatus.SUCCESS,
-            content=content,
-            execution_time_ms=execution_time_ms
-        )
-
-        self.logger.log_agent_completion(
-            "spotify",
-            transaction_id,
-            waypoint.id,
-            result.status.value,
-            execution_time_ms,
-            relevance_score=content.relevance_score
-        )
-
-        return result
-
-    def _run_history_agent(
-        self,
-        transaction_id: str,
-        waypoint: Waypoint
-    ) -> AgentResult:
-        """
-        Execute History agent
-        MOCK IMPLEMENTATION - will be replaced with real agent call
-
-        Args:
-            transaction_id: Transaction ID
-            waypoint: Waypoint to process
-
-        Returns:
-            AgentResult from History agent
-        """
-        start_time = time.time()
-
-        self.logger.log_agent_start(
-            "history",
-            transaction_id,
-            waypoint.id,
-            search_query=waypoint.agent_context.history_query if waypoint.agent_context else ""
-        )
-
-        # MOCK: Simulate API call delay
-        time.sleep(0.3)
-
-        # MOCK: Create fake result
-        content = ContentItem(
-            content_type=ContentType.HISTORY,
-            title=f"History of {waypoint.location_name}",
-            description=f"Fascinating historical facts about {waypoint.location_name} and its significance.",
-            relevance_score=0.68,
-            url=None,
-            metadata={"source": "mock"}
-        )
-
-        execution_time_ms = int((time.time() - start_time) * 1000)
-
-        result = AgentResult(
-            agent_name="history",
-            transaction_id=transaction_id,
-            waypoint_id=waypoint.id,
-            status=AgentStatus.SUCCESS,
-            content=content,
-            execution_time_ms=execution_time_ms
-        )
-
-        self.logger.log_agent_completion(
-            "history",
-            transaction_id,
-            waypoint.id,
-            result.status.value,
-            execution_time_ms,
-            relevance_score=content.relevance_score
-        )
-
-        return result
-
-    def _run_judge(
-        self,
-        context: TransactionContext,
-        waypoint: Waypoint,
-        agent_results: Dict[str, AgentResult]
-    ) -> JudgeDecision:
-        """
-        Execute Judge agent to select best content
-        MOCK IMPLEMENTATION - will be replaced with real agent call
-
-        Args:
-            context: Transaction context
-            waypoint: Waypoint being judged
-            agent_results: Results from all agents
-
-        Returns:
-            JudgeDecision with selected content
-        """
-        start_time = time.time()
-
-        self.logger.debug(
-            "Judge evaluation started",
-            transaction_id=context.transaction_id,
-            waypoint_id=waypoint.id
-        )
-
-        try:
-            # MOCK: Simple selection based on relevance score
-            # Real Judge will use LLM or sophisticated decision logic
-
-            best_agent = None
-            best_score = 0.0
-            scores = {}
-
-            for agent_name, result in agent_results.items():
-                if result.is_successful() and result.content:
-                    score = result.content.relevance_score
-                    scores[agent_name] = score
-                    if score > best_score:
-                        best_score = score
-                        best_agent = agent_name
-                else:
-                    scores[agent_name] = 0.0
-
-            if best_agent:
-                selected_content = agent_results[best_agent].content
-                reasoning = f"Selected {best_agent} with highest relevance score ({best_score:.2f})"
-            else:
-                # All agents failed - use fallback
-                selected_content = create_fallback_content(waypoint)
-                reasoning = "All agents failed, using fallback content"
-                best_agent = "fallback"
-                best_score = 0.0
-
-            decision_time_ms = int((time.time() - start_time) * 1000)
-
-            decision = JudgeDecision(
-                winner=best_agent,
-                reasoning=reasoning,
-                confidence_score=best_score,
-                individual_scores=scores,
-                decision_time_ms=decision_time_ms,
-                tie_breaker_applied=False,
-                selected_content=selected_content
-            )
-
-            self.logger.log_judge_decision(
-                transaction_id=context.transaction_id,
-                waypoint_id=waypoint.id,
-                winner=best_agent,
-                confidence=best_score,
-                reasoning=reasoning
-            )
-
-            return decision
-
-        except Exception as e:
-            self.logger.error(
-                "Judge error, using fallback",
-                transaction_id=context.transaction_id,
-                waypoint_id=waypoint.id,
-                error=str(e)
-            )
-
-            # Fallback decision
-            return JudgeDecision(
-                winner="fallback",
-                reasoning=f"Judge error: {str(e)}",
-                confidence_score=0.0,
-                individual_scores={},
-                decision_time_ms=0,
-                tie_breaker_applied=False,
-                selected_content=create_fallback_content(waypoint)
-            )
 
     def _create_batches(self, waypoints: List[Waypoint]) -> List[List[Waypoint]]:
         """
