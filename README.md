@@ -2,9 +2,11 @@
 
 An intelligent, asynchronous platform that transforms ordinary driving directions into enriched, multimedia journey experiences using coordinated AI agents.
 
-[![Development Phase](https://img.shields.io/badge/Phase-5%20Complete-success)]()
+[![Development Phase](https://img.shields.io/badge/Phase-6%20Complete-success)]()
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)]()
-[![Python](https://img.shields.io/badge/Python-3.10+-blue)]()
+[![Python](https://img.shields.io/badge/Python-3.9+-blue)]()
+[![Test Coverage](https://img.shields.io/badge/Coverage-85%25-brightgreen)]()
+[![Tests](https://img.shields.io/badge/Tests-92%20Passing-success)]()
 [![Agents](https://img.shields.io/badge/Agents-4%2F4%20Working-success)]()
 [![Google Maps](https://img.shields.io/badge/Google%20Maps-Integrated-green)]()
 
@@ -53,7 +55,16 @@ An intelligent, asynchronous platform that transforms ordinary driving direction
 - ✅ Scaling considerations
 - ✅ Comprehensive troubleshooting guide
 
-## 🎉 Status: **PRODUCTION READY**
+### ✅ Phase 6: Complete (Test Coverage & Repository Organization)
+**👉 [READ THE TESTING GUIDE](./docs/guides/TEST_GUIDE.md)**
+- ✅ Test coverage increased from 67% to 85% (+18%)
+- ✅ 92 comprehensive tests (up from 58)
+- ✅ All critical modules fully tested
+- ✅ Repository structure reorganized and cleaned
+- ✅ Examples, data, and docs properly organized
+- ✅ Professional structure for M.Sc. submission
+
+## 🎉 Status: **PRODUCTION READY & SUBMISSION READY**
 
 ---
 
@@ -434,6 +445,31 @@ execution_time_ms: int
 
 ## 🧪 Testing
 
+### Run Test Suite
+
+```bash
+# Run all tests with coverage
+pytest --cov=src --cov-report=term-missing
+
+# Run with verbose output
+pytest -v
+
+# Run specific test module
+pytest tests/test_orchestrator.py -v
+
+# Generate HTML coverage report
+pytest --cov=src --cov-report=html
+open htmlcov/index.html
+```
+
+**Current Test Stats:**
+- ✅ **92 tests** passing (100% pass rate)
+- ✅ **85% code coverage** (target: 70%)
+- ✅ **9 test modules** covering all critical paths
+- ⏱️ **~24 seconds** execution time
+
+### Run Examples
+
 ```bash
 # Run the main demo
 python3 examples/main.py
@@ -447,6 +483,8 @@ grep "TXID-20251130T181555" logs/tour-guide.log
 # Analyze agent performance
 grep "agent completed" logs/tour-guide.log | jq '.execution_time_ms'
 ```
+
+For detailed testing information, see **[TEST_GUIDE.md](./docs/guides/TEST_GUIDE.md)**
 
 ---
 

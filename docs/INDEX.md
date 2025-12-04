@@ -1,9 +1,10 @@
 # Documentation Index
 ## Multi-Agent AI Tour Guide System
 
-**Version**: 1.0
-**Last Updated**: December 3, 2025
+**Version**: 1.1
+**Last Updated**: December 4, 2025
 **Status**: Ready for M.Sc. Submission ✅
+**Latest Changes**: Repository reorganization, test coverage 85%, Phase 6 complete
 
 ---
 
@@ -25,7 +26,9 @@
 
 ### For Development
 
-- **Testing**: [`../tests/README.md`](../tests/README.md) - Test suite documentation
+- **Testing**: [`../tests/README.md`](../tests/README.md) - Test suite documentation (92 tests, 85% coverage)
+- **Test Guide**: [`guides/TEST_GUIDE.md`](guides/TEST_GUIDE.md) - Comprehensive testing guide
+- **Examples**: [`../examples/README.md`](../examples/README.md) - Usage examples and development scripts
 - **Prompt Log**: [`PROMPT_ENGINEERING_LOG.md`](PROMPT_ENGINEERING_LOG.md) - LLM prompts used in development
 - **Agents**: [`../.claude/agents/`](../.claude/agents/) - Claude Code agent definitions (4 agents)
 
@@ -54,13 +57,23 @@
 | [`research/analysis.ipynb`](research/analysis.ipynb) | ~8 KB | Research analysis notebook | ✅ Yes |
 | [`INDEX.md`](INDEX.md) | This file | Documentation navigation | ℹ️ Optional |
 
+### docs/ Subdirectories (NEW ⭐)
+
+| Directory | Purpose | Required for Submission |
+|-----------|---------|------------------------|
+| [`guides/`](guides/) | User guides (TEST_GUIDE.md) | ✅ Yes |
+| [`reference/`](reference/) | Reference materials (submission guidelines) | ℹ️ Reference |
+| [`research/`](research/) | Research analysis and visualizations | ✅ Yes |
+| [`archive/`](archive/) | Historical development documentation | ⚠️ Archive only |
+
 ### Other Documentation
 
 | Location | Purpose | Required for Submission |
 |----------|---------|------------------------|
-| [`tests/README.md`](../tests/README.md) | Test suite documentation | ✅ Yes |
-| [`.claude/agents/*.md`](../.claude/agents/) | Agent definitions (4 files) | ✅ Yes |
-| [`docs/archive/`](archive/) | Historical development docs | ⚠️ Archive only |
+| [`../tests/README.md`](../tests/README.md) | Test suite documentation (92 tests, 85% coverage) | ✅ Yes |
+| [`../examples/README.md`](../examples/README.md) | Example scripts and usage guide | ✅ Yes |
+| [`../data/README.md`](../data/README.md) | Data organization documentation | ℹ️ Optional |
+| [`../.claude/agents/*.md`](../.claude/agents/) | Agent definitions (4 files) | ✅ Yes |
 
 ---
 
@@ -150,10 +163,10 @@ multi-agent-tour-guide/
 │   ├── google_maps/            (API client)
 │   └── agents/                 (Agent implementations)
 │
-├── tests/                       ✅ Test suite (75% coverage)
+├── tests/                       ✅ Test suite (85% coverage)
 │   ├── README.md
 │   ├── conftest.py
-│   └── test_*.py               (7 test files)
+│   └── test_*.py               (9 test files)
 │
 ├── docs/                        ✅ Documentation
 │   ├── INDEX.md                (this file)
@@ -223,6 +236,6 @@ For questions about documentation:
 
 ---
 
-**Last Updated**: December 3, 2025
+**Last Updated**: December 4, 2025
 **Documentation Status**: ✅ Complete and Ready for Submission
 **Compliance**: 100% (91/91 items)

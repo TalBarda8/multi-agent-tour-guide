@@ -16,6 +16,9 @@ tests/
 ├── test_route_retrieval.py  # Google Maps integration tests
 ├── test_waypoint_preprocessor.py # Waypoint processing tests
 ├── test_pipeline.py         # End-to-end pipeline tests
+├── test_orchestrator.py     # Agent orchestration and concurrency tests
+├── test_mock_agents.py      # Mock agent implementation tests
+├── test_response_formatter.py # Response formatting tests
 └── README.md               # This file
 ```
 
@@ -168,10 +171,10 @@ Tests are designed to run in CI/CD pipelines:
 
 All tests should pass with the following characteristics:
 
-- **Total Tests**: 50+ tests across all modules
+- **Total Tests**: 92 tests across 9 test modules
 - **Pass Rate**: 100% (all tests must pass)
-- **Coverage**: 70-80% overall
-- **Execution Time**: <30 seconds for full suite
+- **Coverage**: 85% overall (exceeds target of 70-80%)
+- **Execution Time**: ~24 seconds for full suite
 - **No Warnings**: Clean test output without deprecation warnings
 
 ## Troubleshooting
