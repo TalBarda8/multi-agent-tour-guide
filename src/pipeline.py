@@ -59,6 +59,7 @@ def execute_pipeline(
 
     # Initialize orchestrator
     orchestrator = Orchestrator()
+    context = None  # Initialize to avoid UnboundLocalError in exception handlers
 
     try:
         # ============================================================

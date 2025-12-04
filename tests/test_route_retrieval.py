@@ -13,10 +13,8 @@ class TestRouteRetrieval:
     """Test route retrieval module"""
 
     @patch('src.modules.route_retrieval.get_config')
-    @patch('src.google_maps.client.GoogleMapsClient')
     def test_successful_route_retrieval_mock_mode(
         self,
-        mock_client_class,
         mock_get_config,
         transaction_context,
         mock_config
@@ -24,35 +22,14 @@ class TestRouteRetrieval:
         """Test successful route retrieval in mock mode"""
         mock_get_config.return_value = mock_config
 
-        # Mock client
-        mock_client = Mock()
-        mock_client.get_directions.return_value = {
-            "routes": [{
-                "legs": [{
-                    "distance": {"text": "10 km", "value": 10000},
-                    "duration": {"text": "15 mins", "value": 900},
-                    "steps": [
-                        {
-                            "html_instructions": "Head north",
-                            "distance": {"text": "1 km", "value": 1000},
-                            "start_location": {"lat": 40.7128, "lng": -74.0060},
-                            "end_location": {"lat": 40.7228, "lng": -74.0060}
-                        }
-                    ]
-                }]
-            }],
-            "status": "OK"
-        }
-        mock_client_class.return_value = mock_client
-
-        # Execute
+        # Execute (mock_mode=True by default in mock_config)
         route_data = retrieve_route(transaction_context)
 
-        # Verify
+        # Verify - should get mock data
         assert route_data is not None
-        assert route_data.distance == "10 km"
-        assert route_data.duration == "15 mins"
-        assert len(route_data.waypoints) > 0
+        assert route_data.distance == "3.5 km"  # Mock data returns this
+        assert route_data.duration == "12 mins"
+        assert len(route_data.waypoints) == 8  # Mock returns 8 waypoints
 
     @patch('src.modules.route_retrieval.get_config')
     @patch('src.google_maps.client.GoogleMapsClient')
@@ -64,6 +41,8 @@ class TestRouteRetrieval:
         mock_config
     ):
         """Test route retrieval handles API errors"""
+        # Set mock_mode=False to use real client path
+        mock_config.mock_mode = False
         mock_get_config.return_value = mock_config
 
         mock_client = Mock()
@@ -83,13 +62,13 @@ class TestRouteRetrieval:
         mock_config
     ):
         """Test route retrieval handles zero results"""
+        # Set mock_mode=False to use real client path
+        mock_config.mock_mode = False
         mock_get_config.return_value = mock_config
 
+        from src.google_maps.client import GoogleMapsError
         mock_client = Mock()
-        mock_client.get_directions.return_value = {
-            "routes": [],
-            "status": "ZERO_RESULTS"
-        }
+        mock_client.get_directions.side_effect = GoogleMapsError("ZERO_RESULTS")
         mock_client_class.return_value = mock_client
 
         with pytest.raises(RouteRetrievalError):
