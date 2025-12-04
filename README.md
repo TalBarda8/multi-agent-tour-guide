@@ -27,7 +27,7 @@ An intelligent, asynchronous platform that transforms ordinary driving direction
 - ✅ `content-evaluator-judge`
 
 ### ✅ Phase 3: Complete (Real Agent Integration)
-**👉 [READ THE INTEGRATION REPORT](./REAL_AGENT_INTEGRATION.md)**
+**👉 [READ THE INTEGRATION REPORT](./docs/archive/REAL_AGENT_INTEGRATION.md)**
 - ✅ All agents successfully tested
 - ✅ Transaction ID propagation verified
 - ✅ Intelligent judge decisions working
@@ -36,7 +36,7 @@ An intelligent, asynchronous platform that transforms ordinary driving direction
 - ✅ Performance within targets
 
 ### ✅ Phase 4: Complete (Google Maps API Integration)
-**👉 [READ THE INTEGRATION GUIDE](./PHASE4_GOOGLE_MAPS_INTEGRATION.md)**
+**👉 [READ THE INTEGRATION GUIDE](./docs/archive/PHASE4_GOOGLE_MAPS_INTEGRATION.md)**
 - ✅ Google Maps Directions API client implemented
 - ✅ Real route retrieval with waypoint extraction
 - ✅ HTML instruction parsing and location name extraction
@@ -45,7 +45,7 @@ An intelligent, asynchronous platform that transforms ordinary driving direction
 - ✅ Mock/Production mode toggle
 
 ### ✅ Phase 5: Complete (Production Deployment)
-**👉 [READ THE DEPLOYMENT GUIDE](./PRODUCTION_DEPLOYMENT_GUIDE.md)**
+**👉 [READ THE DEPLOYMENT GUIDE](./docs/archive/PRODUCTION_DEPLOYMENT_GUIDE.md)**
 - ✅ Complete production deployment guide
 - ✅ Security best practices documented
 - ✅ Monitoring and observability setup
@@ -137,7 +137,7 @@ nano .env
 
 ```bash
 # Run with default Empire State Building → Central Park route
-python3 main.py
+python3 examples/main.py
 ```
 
 **Output:**
@@ -204,31 +204,87 @@ Route Summary:
 
 ```
 multi-agent-tour-guide/
+├── README.md                       # Main project documentation
 ├── RPD.md                          # Complete Requirements & Product Definition
-├── AGENT_CREATION_GUIDE.md         # 👈 Agent specifications and integration guide
-├── README.md                       # This file
-├── main.py                         # Main entry point
+├── COMPLIANCE_SUMMARY.md           # M.Sc. Submission compliance summary
+├── LICENSE                         # MIT License
+├── setup.py                        # Package installation configuration
 ├── requirements.txt                # Python dependencies
+├── pytest.ini                      # Test configuration
 ├── .env.example                    # Environment variable template
 │
-├── src/
-│   ├── __init__.py
-│   ├── config.py                   # System configuration
-│   ├── logging_config.py           # Structured logging setup
-│   ├── models.py                   # Core data structures
-│   ├── pipeline.py                 # Main pipeline orchestration
+├── src/                            # 📦 Source Code
+│   ├── __init__.py                # Package initialization
+│   ├── config.py                  # System configuration
+│   ├── logging_config.py          # Structured logging setup
+│   ├── models.py                  # Core data structures
+│   ├── pipeline.py                # Main pipeline orchestration
 │   │
-│   └── modules/                    # Pipeline modules
-│       ├── __init__.py
-│       ├── request_validator.py    # Module 1: Input validation
-│       ├── route_retrieval.py      # Module 2: Google Maps integration (mocked)
-│       ├── waypoint_preprocessor.py # Module 3: Metadata enrichment
-│       ├── orchestrator.py         # Module 4: Multi-agent coordinator
-│       ├── result_aggregator.py    # Module 5: Statistics compilation
-│       └── response_formatter.py   # Module 6: Output formatting
+│   ├── modules/                   # Pipeline modules (6 stages)
+│   │   ├── request_validator.py  # Module 1: Input validation
+│   │   ├── route_retrieval.py    # Module 2: Google Maps integration
+│   │   ├── waypoint_preprocessor.py # Module 3: Metadata enrichment
+│   │   ├── orchestrator.py       # Module 4: Multi-agent coordinator
+│   │   ├── result_aggregator.py  # Module 5: Statistics compilation
+│   │   ├── response_formatter.py # Module 6: Output formatting
+│   │   └── mock_agents.py        # Mock agent implementations
+│   │
+│   ├── google_maps/               # Google Maps API client
+│   │   └── client.py
+│   │
+│   └── agents/                    # Agent utilities
+│       └── youtube_client.py
 │
-└── logs/                           # Structured JSON logs (auto-created)
-    └── tour-guide.log
+├── tests/                          # 🧪 Test Suite (85% coverage)
+│   ├── README.md                  # Test documentation
+│   ├── conftest.py                # PyTest fixtures
+│   └── test_*.py                  # Test modules (9 files)
+│
+├── examples/                       # 📘 Example Scripts
+│   ├── README.md                  # Examples documentation
+│   ├── main.py                    # Main usage example
+│   ├── orchestrate_with_agents.py # Advanced orchestration
+│   ├── spotify_finder.py          # Spotify integration example
+│   ├── test_minimal.py            # Minimal test script
+│   └── test_real_agents.py        # Real agent testing
+│
+├── data/                           # 📊 Data Files
+│   ├── README.md                  # Data documentation
+│   └── sample/                    # Sample/test data (gitignored)
+│       └── *.json
+│
+├── docs/                           # 📚 Documentation
+│   ├── INDEX.md                   # Documentation index
+│   ├── ARCHITECTURE.md            # System architecture (C4 model)
+│   ├── COST_ANALYSIS.md           # Cost breakdown and optimization
+│   ├── EXTENSIBILITY.md           # Extension and plugin guide
+│   ├── ISO_IEC_25010_COMPLIANCE.md # Quality standards (88% compliance)
+│   ├── PROMPT_ENGINEERING_LOG.md  # LLM prompt documentation
+│   ├── SUBMISSION_CHECKLIST.md    # M.Sc. submission checklist
+│   │
+│   ├── guides/                    # User guides
+│   │   └── TEST_GUIDE.md          # Testing guide
+│   │
+│   ├── reference/                 # Reference materials
+│   │   └── software_submission_guidelines.pdf
+│   │
+│   ├── research/                  # Research analysis
+│   │   ├── analysis.ipynb         # Jupyter analysis with visualizations
+│   │   └── *.png                  # Generated charts
+│   │
+│   └── archive/                   # Historical documentation
+│       └── *.md                   # Archived development docs
+│
+├── .claude/                        # 🤖 Claude Code Agents
+│   ├── agents/                    # Agent definitions (4 agents)
+│   │   ├── youtube-location-video-finder.md
+│   │   ├── music-location-finder.md
+│   │   ├── history-location-researcher.md
+│   │   └── content-evaluator-judge.md
+│   └── settings.local.json        # Claude Code configuration
+│
+└── logs/                           # 📝 Runtime Logs (gitignored)
+    └── *.log
 ```
 
 ---
@@ -283,7 +339,7 @@ multi-agent-tour-guide/
 
 ### Immediate: Create Agents
 
-**👉 See [AGENT_CREATION_GUIDE.md](./AGENT_CREATION_GUIDE.md) for detailed specifications**
+**👉 See [AGENT_CREATION_GUIDE.md](./docs/archive/AGENT_CREATION_GUIDE.md) for detailed specifications**
 
 Create these 4 agents in your agent interface:
 1. **YouTubeContentAgent** - Find relevant videos (walking tours, location videos)
@@ -312,7 +368,7 @@ Once you create the agents, I will:
   - Performance analysis
   - Development phases
 
-- **[AGENT_CREATION_GUIDE.md](./AGENT_CREATION_GUIDE.md)** - Agent specifications
+- **[AGENT_CREATION_GUIDE.md](./docs/archive/AGENT_CREATION_GUIDE.md)** - Agent specifications
   - When to create agents
   - Detailed agent specs
   - Input/output formats
@@ -380,7 +436,7 @@ execution_time_ms: int
 
 ```bash
 # Run the main demo
-python3 main.py
+python3 examples/main.py
 
 # View logs
 cat logs/tour-guide.log | jq .    # Pretty-print JSON logs
@@ -429,7 +485,7 @@ Educational project for multi-agent system development.
 
 ## 🙋 Support
 
-- **Documentation**: See [RPD.md](./RPD.md) and [AGENT_CREATION_GUIDE.md](./AGENT_CREATION_GUIDE.md)
+- **Documentation**: See [RPD.md](./RPD.md) and [AGENT_CREATION_GUIDE.md](./docs/archive/AGENT_CREATION_GUIDE.md)
 - **Issues**: Create issue in GitHub repository
 - **Questions**: Review the comprehensive RPD first
 
